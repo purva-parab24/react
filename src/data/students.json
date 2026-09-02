@@ -1,0 +1,16 @@
+[
+  {
+    "id": "s1",
+    "name": "Aisha Khan",
+    "email": "aisha@example.com",
+    "marks": {"Math": 88, "Science": 92, "English": 81},
+    "attendance": 95
+  },
+  {
+    "id": "s2",
+    "name": "Rahul Patel",
+    "email": "rahul@example.com",
+    "marks": {"Math": 76, "Science": 85, "English": 79},
+    "attendance": 88
+  }
+]
