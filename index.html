@@ -1,1 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Student Registration</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <h1>Student Registration</h1>
+      <p class="tagline">Sign up to join courses and manage your student profile</p>
+    </div>
+  </header>
 
+  <main class="container">
+    <form class="registration-form" action="#" method="post" novalidate>
+      <h2>Create an account</h2>
+
+      <div class="grid">
+        <div class="field">
+          <label for="firstName">First name</label>
+          <input id="firstName" name="firstName" type="text" required placeholder="Jane" />
+        </div>
+
+        <div class="field">
+          <label for="lastName">Last name</label>
+          <input id="lastName" name="lastName" type="text" required placeholder="Doe" />
+        </div>
+
+        <div class="field">
+          <label for="email">Email</label>
+          <input id="email" name="email" type="email" required placeholder="you@example.com" />
+        </div>
+
+        <div class="field">
+          <label for="phone">Phone</label>
+          <input id="phone" name="phone" type="tel" pattern="[0-9+\-() ]{7,}" placeholder="+1 (555) 555-5555" />
+        </div>
+
+        <div class="field">
+          <label for="password">Password</label>
+          <input id="password" name="password" type="password" minlength="6" required placeholder="At least 6 characters" />
+        </div>
+
+        <div class="field">
+          <label for="confirmPassword">Confirm password</label>
+          <input id="confirmPassword" name="confirmPassword" type="password" minlength="6" required placeholder="Repeat password" />
+        </div>
+
+        <div class="field">
+          <label for="dob">Date of birth</label>
+          <input id="dob" name="dob" type="date" />
+        </div>
+
+        <div class="field">
+          <label for="gender">Gender</label>
+          <select id="gender" name="gender">
+            <option value="">Prefer not to say</option>
+            <option value="female">Female</option>
+            <option value="male">Male</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+
+        <div class="field full">
+          <label for="course">Course / Program</label>
+          <select id="course" name="course" required>
+            <option value="">Select a course</option>
+            <option value="cs">Computer Science</option>
+            <option value="math">Mathematics</option>
+            <option value="eng">Engineering</option>
+            <option value="art">Arts</option>
+            <option value="bus">Business</option>
+          </select>
+        </div>
+
+        <div class="field full">
+          <label for="address">Address</label>
+          <textarea id="address" name="address" rows="3" placeholder="Street, City, State"></textarea>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" class="btn primary">Register</button>
+        <button type="reset" class="btn">Reset</button>
+      </div>
+
+      <p class="note">We will never share your personal information. This form is a static HTML/CSS example — to save data you would need to add a server or JavaScript.</p>
+    </form>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">© 2026 Example University — All rights reserved</div>
+  </footer>
+</body>
+</html>
