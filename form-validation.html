@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Form with Validation</title>
+</head>
+<body>
+    <h1>Registration Form</h1>
+
+    <!-- Success Message Container -->
+    <div id="successMessage" style="display: none;">
+        <strong>Success!</strong> Your registration has been submitted successfully.
+    </div>
+
+    <!-- Registration Form -->
+    <form id="registrationForm">
+        <!-- Full Name Field -->
+        <div>
+            <label for="fullName">Full Name:</label>
+            <input 
+                type="text" 
+                id="fullName" 
+                name="fullName" 
+                required
+                minlength="3"
+                maxlength="50"
+            >
+            <span id="fullNameError" class="error"></span>
+        </div>
+
+        <!-- Email Field -->
+        <div>
+            <label for="email">Email:</label>
+            <input 
+                type="email" 
+                id="email" 
+                name="email" 
+                required
+            >
+            <span id="emailError" class="error"></span>
+        </div>
+
+        <!-- Phone Number Field -->
+        <div>
+            <label for="phone">Phone Number:</label>
+            <input 
+                type="tel" 
+                id="phone" 
+                name="phone" 
+                required
+                pattern="[0-9]{10}"
+                maxlength="10"
+            >
+            <span id="phoneError" class="error"></span>
+        </div>
+
+        <!-- Password Field -->
+        <div>
+            <label for="password">Password:</label>
+            <input 
+                type="password" 
+                id="password" 
+                name="password" 
+                required
+                minlength="8"
+                maxlength="50"
+            >
+            <span id="passwordError" class="error"></span>
+        </div>
+
+        <!-- Confirm Password Field -->
+        <div>
+            <label for="confirmPassword">Confirm Password:</label>
+            <input 
+                type="password" 
+                id="confirmPassword" 
+                name="confirmPassword" 
+                required
+                minlength="8"
+                maxlength="50"
+            >
+            <span id="confirmPasswordError" class="error"></span>
+        </div>
+
+        <!-- Date of Birth Field -->
+        <div>
+            <label for="dateOfBirth">Date of Birth:</label>
+            <input 
+                type="date" 
+                id="dateOfBirth" 
+                name="dateOfBirth" 
+                required
+            >
+            <span id="dateOfBirthError" class="error"></span>
+        </div>
+
+        <!-- Gender Field -->
+        <div>
+            <label for="gender">Gender:</label>
+            <select id="gender" name="gender" required>
+                <option value="">Select Gender</option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+                <option value="other">Other</option>
+            </select>
+            <span id="genderError" class="error"></span>
+        </div>
+
+        <!-- Country Field -->
+        <div>
+            <label for="country">Country:</label>
+            <select id="country" name="country" required>
+                <option value="">Select Country</option>
+                <option value="usa">United States</option>
+                <option value="uk">United Kingdom</option>
+                <option value="canada">Canada</option>
+                <option value="australia">Australia</option>
+                <option value="india">India</option>
+                <option value="other">Other</option>
+            </select>
+            <span id="countryError" class="error"></span>
+        </div>
+
+        <!-- Terms and Conditions Checkbox -->
+        <div>
+            <input 
+                type="checkbox" 
+                id="terms" 
+                name="terms" 
+                required
+            >
+            <label for="terms">I agree to the Terms and Conditions</label>
+            <span id="termsError" class="error"></span>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit">Register</button>
+    </form>
+
+    <script>
+        // ============================================
+        // Form Validation Script
+        // ============================================
+
+        // Get form and success message elements
+        const form = document.getElementById('registrationForm');
+        const successMessage = document.getElementById('successMessage');
+
+        // ============================================
+        // Validation Functions
+        // ============================================
+
+        /**
+         * Validates full name: required, minimum 3 characters, only letters and spaces
+         * @param {string} fullName - The full name to validate
+         * @returns {object} - Object with isValid boolean and error message
+         */
+        function validateFullName(fullName) {
+            fullName = fullName.trim();
+
+            if (!fullName) {
+                return {
+                    isValid: false,
+                    message: 'Full Name is required.'
+                };
+            }
+
+            if (fullName.length < 3) {
+                return {
+                    isValid: false,
+                    message: 'Full Name must be at least 3 characters long.'
+                };
+            }
+
+            // Check if only letters and spaces are present
+            const nameRegex = /^[a-zA-Z\s]+$/;
+            if (!nameRegex.test(fullName)) {
+                return {
+                    isValid: false,
+                    message: 'Full Name should contain only letters and spaces.'
+                };
+            }
+
+            return {
+                isValid: true,
+                message: ''
+            };
+        }
+
+        /**
+         * Validates email format
+         * @param {string} email - The email to validate
+         * @returns {object} - Object with isValid boolean and error message
+         */
+        function validateEmail(email) {
+            email = email.trim();
+
+            if (!email) {
+                return {
+                    isValid: false,
+                    message: 'Email is required.'
+                };
+            }
+
+            // Simple email regex pattern
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                return {
+                    isValid: false,
+                    message: 'Please enter a valid email address.'
+                };
+            }
+
+            return {
+                isValid: true,
+                message: ''
+            };
+        }
+
+        /**
+         * Validates phone number: exactly 10 digits
+         * @param {string} phone - The phone number to validate
+         * @returns {object} - Object with isValid boolean and error message
+         */
+        function validatePhone(phone) {
+            phone = phone.trim();
+
+            if (!phone) {
+                return {
+                    isValid: false,
+                    message: 'Phone Number is required.'
+                };
+            }
+
+            // Check if phone contains exactly 10 digits
+            const phoneRegex = /^[0-9]{10}$/;
+            if (!phoneRegex.test(phone)) {
+                return {
+                    isValid: false,
+                    message: 'Phone Number must contain exactly 10 digits.'
+                };
+            }
+
+            return {
+                isValid: true,
+                message: ''
+            };
+        }
+
+        /**
+         * Validates password: minimum 8 characters, at least one uppercase, lowercase, digit, and special character
+         * @param {string} password - The password to validate
+         * @returns {object} - Object with isValid boolean and error message
+         */
+        function validatePassword(password) {
+            if (!password) {
+                return {
+                    isValid: false,
+                    message: 'Password is required.'
+                };
+            }
+
+            if (password.length < 8) {
+                return {
+                    isValid: false,
+                    message: 'Password must be at least 8 characters long.'
+                };
+            }
+
+            // Check for uppercase letter
+            if (!/[A-Z]/.test(password)) {
+                return {
+                    isValid: false,
+                    message: 'Password must contain at least one uppercase letter.'
+                };
+            }
+
+            // Check for lowercase letter
+            if (!/[a-z]/.test(password)) {
+                return {
+                    isValid: false,
+                    message: 'Password must contain at least one lowercase letter.'
+                };
+            }
+
+            // Check for digit
+            if (!/[0-9]/.test(password)) {
+                return {
+                    isValid: false,
+                    message: 'Password must contain at least one digit.'
+                };
+            }
+
+            // Check for special character
+            if (!/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password)) {
+                return {
+                    isValid: false,
+                    message: 'Password must contain at least one special character.'
+                };
+            }
+
+            return {
+                isValid: true,
+                message: ''
+            };
+        }
+
+        /**
+         * Validates confirm password matches password
+         * @param {string} password - The password
+         * @param {string} confirmPassword - The confirm password
+         * @returns {object} - Object with isValid boolean and error message
+         */
+        function validateConfirmPassword(password, confirmPassword) {
+            if (!confirmPassword) {
+                return {
+                    isValid: false,
+                    message: 'Confirm Password is required.'
+                };
+            }
+
+            if (password !== confirmPassword) {
+                return {
+                    isValid: false,
+                    message: 'Passwords do not match.'
+                };
+            }
+
+            return {
+                isValid: true,
+                message: ''
+            };
+        }
+
+        /**
+         * Validates date of birth: user must be at least 18 years old
+         * @param {string} dateString - The date of birth in YYYY-MM-DD format
+         * @returns {object} - Object with isValid boolean and error message
+         */
+        function validateDateOfBirth(dateString) {
+            if (!dateString) {
+                return {
+                    isValid: false,
+                    message: 'Date of Birth is required.'
+                };
+            }
+
+            const birthDate = new Date(dateString);
+            const today = new Date();
+
+            // Calculate age
+            let age = today.getFullYear() - birthDate.getFullYear();
+            const monthDifference = today.getMonth() - birthDate.getMonth();
+
+            // If birthday hasn't occurred this year, subtract one from age
+            if (monthDifference < 0 || (monthDifference === 0 && today.getDate() < birthDate.getDate())) {
+                age--;
+            }
+
+            if (age < 18) {
+                return {
+                    isValid: false,
+                    message: 'You must be at least 18 years old.'
+                };
+            }
+
+            return {
+                isValid: true,
+                message: ''
+            };
+        }
+
+        /**
+         * Validates gender selection
+         * @param {string} gender - The selected gender
+         * @returns {object} - Object with isValid boolean and error message
+         */
+        function validateGender(gender) {
+            if (!gender) {
+                return {
+                    isValid: false,
+                    message: 'Please select a gender.'
+                };
+            }
+
+            return {
+                isValid: true,
+                message: ''
+            };
+        }
+
+        /**
+         * Validates country selection
+         * @param {string} country - The selected country
+         * @returns {object} - Object with isValid boolean and error message
+         */
+        function validateCountry(country) {
+            if (!country) {
+                return {
+                    isValid: false,
+                    message: 'Please select a country.'
+                };
+            }
+
+            return {
+                isValid: true,
+                message: ''
+            };
+        }
+
+        /**
+         * Validates terms and conditions checkbox
+         * @param {boolean} isChecked - Whether the checkbox is checked
+         * @returns {object} - Object with isValid boolean and error message
+         */
+        function validateTerms(isChecked) {
+            if (!isChecked) {
+                return {
+                    isValid: false,
+                    message: 'You must agree to the Terms and Conditions.'
+                };
+            }
+
+            return {
+                isValid: true,
+                message: ''
+            };
+        }
+
+        /**
+         * Display error message for a field
+         * @param {string} fieldId - The ID of the error element
+         * @param {string} message - The error message to display
+         */
+        function showError(fieldId, message) {
+            const errorElement = document.getElementById(fieldId);
+            errorElement.textContent = message;
+        }
+
+        /**
+         * Clear error message for a field
+         * @param {string} fieldId - The ID of the error element
+         */
+        function clearError(fieldId) {
+            const errorElement = document.getElementById(fieldId);
+            errorElement.textContent = '';
+        }
+
+        /**
+         * Validate the entire form
+         * @returns {boolean} - True if all validations pass, false otherwise
+         */
+        function validateForm() {
+            let isFormValid = true;
+
+            // Get form values
+            const fullName = document.getElementById('fullName').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            const dateOfBirth = document.getElementById('dateOfBirth').value;
+            const gender = document.getElementById('gender').value;
+            const country = document.getElementById('country').value;
+            const termsChecked = document.getElementById('terms').checked;
+
+            // Validate Full Name
+            const fullNameResult = validateFullName(fullName);
+            if (!fullNameResult.isValid) {
+                showError('fullNameError', fullNameResult.message);
+                isFormValid = false;
+            } else {
+                clearError('fullNameError');
+            }
+
+            // Validate Email
+            const emailResult = validateEmail(email);
+            if (!emailResult.isValid) {
+                showError('emailError', emailResult.message);
+                isFormValid = false;
+            } else {
+                clearError('emailError');
+            }
+
+            // Validate Phone
+            const phoneResult = validatePhone(phone);
+            if (!phoneResult.isValid) {
+                showError('phoneError', phoneResult.message);
+                isFormValid = false;
+            } else {
+                clearError('phoneError');
+            }
+
+            // Validate Password
+            const passwordResult = validatePassword(password);
+            if (!passwordResult.isValid) {
+                showError('passwordError', passwordResult.message);
+                isFormValid = false;
+            } else {
+                clearError('passwordError');
+            }
+
+            // Validate Confirm Password
+            const confirmPasswordResult = validateConfirmPassword(password, confirmPassword);
+            if (!confirmPasswordResult.isValid) {
+                showError('confirmPasswordError', confirmPasswordResult.message);
+                isFormValid = false;
+            } else {
+                clearError('confirmPasswordError');
+            }
+
+            // Validate Date of Birth
+            const dateOfBirthResult = validateDateOfBirth(dateOfBirth);
+            if (!dateOfBirthResult.isValid) {
+                showError('dateOfBirthError', dateOfBirthResult.message);
+                isFormValid = false;
+            } else {
+                clearError('dateOfBirthError');
+            }
+
+            // Validate Gender
+            const genderResult = validateGender(gender);
+            if (!genderResult.isValid) {
+                showError('genderError', genderResult.message);
+                isFormValid = false;
+            } else {
+                clearError('genderError');
+            }
+
+            // Validate Country
+            const countryResult = validateCountry(country);
+            if (!countryResult.isValid) {
+                showError('countryError', countryResult.message);
+                isFormValid = false;
+            } else {
+                clearError('countryError');
+            }
+
+            // Validate Terms and Conditions
+            const termsResult = validateTerms(termsChecked);
+            if (!termsResult.isValid) {
+                showError('termsError', termsResult.message);
+                isFormValid = false;
+            } else {
+                clearError('termsError');
+            }
+
+            return isFormValid;
+        }
+
+        /**
+         * Handle form submission
+         * @param {Event} event - The form submission event
+         */
+        function handleFormSubmit(event) {
+            event.preventDefault();
+
+            // Hide success message initially
+            successMessage.style.display = 'none';
+
+            // Validate the form
+            if (validateForm()) {
+                // All validations passed
+                successMessage.style.display = 'block';
+                console.log('Form submitted successfully!');
+
+                // Optionally reset the form
+                form.reset();
+
+                // Hide success message after 5 seconds
+                setTimeout(() => {
+                    successMessage.style.display = 'none';
+                }, 5000);
+            }
+        }
+
+        // ============================================
+        // Event Listeners
+        // ============================================
+
+        // Add submit event listener to the form
+        form.addEventListener('submit', handleFormSubmit);
+    </script>
+</body>
+</html>
